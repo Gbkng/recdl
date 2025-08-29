@@ -48,6 +48,8 @@ recdl() {
         echo "Error: unexpected error while trying to 'cd' to '$newdir_relative'" >&2
         return 1
       }
+      # output pwd to stdout makes the function composable
+      echo "$newdir_relative"
       return 0
     }
 
