@@ -42,7 +42,10 @@ recdl() {
 
     # 130 is an expected SIGINT interrupt of fzf (see fzf manpage)
     [ $exit_status -eq 130 ] && {
-      cd "$newdir_relative" || return 1
+      cd "$newdir_relative" || {
+        echo "Error: unexpected error while trying to 'cd' to '$newdir_relative'" >&2
+        return 1
+      }
       return 0
     }
 
