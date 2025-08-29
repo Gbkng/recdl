@@ -49,12 +49,12 @@ recdl() {
       return
     }
     [ $exit_status -eq 0 ] || {
-      echo "unexpected error status: '$exit_status'" >&2
+      echo "Error: unexpected error status: '$exit_status'" >&2
       break
     }
     # change to selected directory
     { [ -d "$dir" ] && cd "$dir"; } || {
-      echo "unexpected error while 'cd': '$exit_status'" >&2
+      echo "Error: unexpected error while 'cd': '$exit_status'" >&2
       break
     }
   realpath --relative-to="$base" "$(pwd)"
