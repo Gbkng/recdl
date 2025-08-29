@@ -1,6 +1,6 @@
 # About recdl
 
-A read-eval-cd-loop simple shell function.
+A read-eval-cd-loop simple `sh`-compliant shell function.
 
 The present `recdl.sh` shell script defines the `recdl` function, which repeats the
 following `read-eval-cd` cycle:
