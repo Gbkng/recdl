@@ -60,7 +60,7 @@ recdl() {
       return 1
     }
     [ $exit_status -eq 0 ] || {
-      echo "Error: unexpected error status: '$exit_status'" >&2
+      echo "Error: unexpected error status: '$exit_status'. Abort." >&2
       return 1
     }
 
