@@ -57,7 +57,7 @@ recdl() {
       echo "Error: unexpected error while 'cd': '$exit_status'" >&2
       break
     }
-  realpath --relative-to="$base" "$(pwd)"
+    realpath --relative-to="$base" "$(pwd)" >&2
   done
 }
 
