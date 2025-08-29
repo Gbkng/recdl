@@ -68,7 +68,9 @@ recdl() {
       return 1
     }
 
-    echo ">$newdir_relative" >&2
+    # clear line and print current
+    # see tput manpage
+    printf "%s> %s" "$(tput el)" "$newdir_relative" >&2
   done
 }
 
