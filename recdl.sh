@@ -56,9 +56,9 @@ recdl() {
       return 1
     }
     # change to selected directory
-    { [ -d "$dir" ] && cd "$dir"; } || {
-      echo "Error: unexpected error while 'cd': '$exit_status'" >&2
-      break
+    { cd "$dir"; } || {
+      echo "Error: 'cd' to '$dir' failed with exit status: '$?'" >&2
+      return 1
     }
     realpath --relative-to="$base" "$(pwd)" >&2
   done
