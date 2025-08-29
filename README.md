@@ -1,31 +1,32 @@
 # About recdl
 
-A read-eval-cd-loop simple `sh`-compliant shell function.
+A read-eval-cd-loop as a simple, `sh`-compliant, shell function.
 
 The present `recdl.sh` shell script defines the `recdl` function, which repeats the
-following `read-eval-cd` cycle:
+following `read-eval-cd` loop:
 
 - Scan directories in the current working directory
 - Let the user interactively choose a directory (see
   [`fzf`](https://github.com/junegunn/fzf) documentation for more information)
 - `cd` to the chosen directory
+- Repeat
 
-To interrupt the loop, press `Escape` or `Ctrl-C`. The loop is interrupted.
+To interrupt the loop, press `Escape` or `Ctrl-C`.
 
 The `recdl` function is basically just a convenient wrapper around `fzf`.
 
 Note that this repository is really just a way to share the basic idea of
-combining `fd` and `fzf` to create a a `read-eval-cd` loop. It is not meant to
+combining `fd` and `fzf` to create a a `read-eval-cd` loop. For now, it is not meant to
 become a standalone application.
 
 # Installation
 
-Simply clone this repository and `source` (or `.`, on `sh`) the `recdl.sh`
+Simply clone this repository and `source` (or `.`, on `sh` shell) the `recdl.sh`
 script.
 
 Alternatively, you can copy the `recdl` function of the `recdl.sh` script
-directly inside your shell configuration. It allows you to customize the
-function to your needs, making it independent from possible future updates.
+directly inside your shell configuration. It allows customizing the
+function to your needs.
 
 # Usage
 
@@ -51,7 +52,11 @@ available by default on most system while `fd` runs faster
 
 # Rationale
 
-Running `fzf` directly from `$HOME` is not always satisfactory, as too many
+The goal of `recdl` is to change directory with a more pleasant approach than usual `cd`. The latter is repetitive and often does not have fuzzy completion.
+
+The `fzf` application allows to fuzzy search any directory or subdirectory inside the current one, directly, with fuzzy match.
+
+Running `fzf` directly from a large directory (e.g. `$HOME`) is not always satisfactory, as too many
 directories are scanned recursively, leading to high CPU and power
 usage.
 
@@ -72,6 +77,6 @@ directories, which is often wanted, but at the detriment of feature 2 above.
 
 # Alternatives
 
-A very simple alternative could be to use
+A very simple alternative is to use
 [`ranger`](https://github.com/ranger/ranger) like so: `source ranger`. The
 `recdl` is much more basic and can be easily customized.
