@@ -57,7 +57,7 @@ recdl() {
         echo "Error: failed to recover inital cwd. Abort." >&2
         return 1
       }
-      return
+      return 1
     }
     [ $exit_status -eq 0 ] || {
       echo "Error: unexpected error status: '$exit_status'" >&2
