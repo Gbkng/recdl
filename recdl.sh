@@ -21,7 +21,7 @@ else
   return 1
 fi
 
-recdl_() {
+recdl() {
   while true; do
     dir="$(
       fd_cmd | fzf \
@@ -47,5 +47,4 @@ recdl_() {
   done
 }
 
-alias recdl="recdl_"
-alias hrecdl="cd \$HOME; recdl_"
+alias hrecdl="cd \$HOME; recdl"
