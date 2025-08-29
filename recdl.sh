@@ -5,7 +5,7 @@ set -u
 which "fzf" >/dev/null 2>&1 ||
   {
     echo "'fzf' could be found in the current environment. This dependency is required. Abort." >&2;
-    return 1;
+    return 1
   }
 
 # note: also echo ".." to allow going backward in recdl
@@ -40,13 +40,13 @@ recdl() {
     [ $exit_status -eq 130 ] && return 0
     # No match (see fzf manpage)
     [ $exit_status -eq 1 ] && {
-      echo "Warning: impossible to 'cd' to given directory as it is not part of possible choices." >&2;
-      continue
+      echo "Warning: impossible to 'cd' to given directory as it is not part of possible choices." >&2
+          continue
     }
     [ $exit_status -eq 2 ] && {
       echo "Error: unexpected error of fzf" >&2
       cd "$base" || {
-        echo "Error: failed to recover inital cwd." >&2;
+        echo "Error: failed to recover inital cwd. Abort." >&2
         return 1
       }
       return
