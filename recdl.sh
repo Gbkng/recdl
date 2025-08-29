@@ -30,7 +30,9 @@ recdl() {
   base="$(pwd)"
   newdir_relative="./"
   while true; do
-    newdir_relative="$(
+    # a buffer is required, as return value of fzf is irrelevant in case of
+    # error or interrupt
+    buff="$(
       fd_cmd "$(realpath --relative-to="$base" "$newdir_relative")" | fzf \
         --layout=reverse \
         --smart-case \
@@ -62,6 +64,8 @@ recdl() {
       echo "Error: unexpected error status: '$exit_status'. Abort." >&2
       return 1
     }
+
+    newdir_relative=$buff
 
     [ -d "$newdir_relative" ] || {
       echo "Error: unexpectedly, '$newdir_relative' is not a directory. Abort." >&2
