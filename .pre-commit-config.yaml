@@ -1,0 +1,16 @@
+repos:
+-   repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v6.0.0
+    hooks:
+    -   id: trailing-whitespace
+    -   id: end-of-file-fixer
+    -   id: check-yaml
+    -   id: debug-statements
+    -   id: double-quote-string-fixer
+    -   id: name-tests-test
+    -   id: requirements-txt-fixer
+-   repo: https://github.com/koalaman/shellcheck-precommit
+    rev: v0.11.0
+    hooks:
+    -   id: shellcheck
+#       args: ["--severity=warning"]  # Optionally only show errors and warnings
