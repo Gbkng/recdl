@@ -22,6 +22,7 @@ else
 fi
 
 recdl() {
+  base=$(pwd)
   while true; do
     dir="$(
       fd_cmd | fzf \
@@ -43,7 +44,7 @@ recdl() {
       echo "unexpected error while 'cd': '$exit_status'" >&2
       break
     }
-    pwd
+  realpath --relative-to="$base" "$(pwd)"
   done
 }
 
