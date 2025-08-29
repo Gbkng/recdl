@@ -53,10 +53,6 @@ recdl() {
     }
     [ $exit_status -eq 2 ] && {
       echo "Error: unexpected error of fzf" >&2
-      cd "$base" || {
-        echo "Error: failed to recover inital cwd. Abort." >&2
-        return 1
-      }
       return 1
     }
     [ $exit_status -eq 0 ] || {
