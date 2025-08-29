@@ -8,12 +8,15 @@ which "fzf" >/dev/null 2>&1 ||
     return 1;
   }
 
+# note: also echo ".." to allow going backward in recdl
 if which "fd" >/dev/null 2>&1; then
   fd_cmd() {
+    echo ".."
     fd -t d --hidden --no-ignore -d 1
   }
 elif which "find" >/dev/null 2>&1; then
   fd_cmd() {
+    echo ".."
     find . -maxdepth 1 -type d
   }
 else
