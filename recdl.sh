@@ -49,7 +49,7 @@ recdl() {
     # No match (see fzf manpage)
     [ $exit_status -eq 1 ] && {
       echo "Warning: impossible to 'cd' to given directory as it is not part of possible choices." >&2
-          continue
+      continue
     }
     [ $exit_status -eq 2 ] && {
       echo "Error: unexpected error of fzf" >&2
