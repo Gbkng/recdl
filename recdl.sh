@@ -47,7 +47,7 @@ recdl() {
       echo "Error: unexpected error of fzf" >&2
       cd "$base" || {
         echo "Error: failed to recover inital cwd." >&2;
-        return;
+        return 1
       }
       return
     }
