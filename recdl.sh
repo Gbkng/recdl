@@ -35,6 +35,11 @@ recdl() {
     exit_status=$?
     # 130 is an expected SIGINT interrupt of fzf (see 'man fzf')
     [ $exit_status -eq 130 ] && break
+    # No match (see fzf manpage)
+    [ $exit_status -eq 1 ] && { 
+      echo "Warning: impossible to 'cd' to given directory as it is not part of possible choices." >&2; 
+      continue
+    }
     [ $exit_status -eq 0 ] || {
       echo "unexpected error status: '$exit_status'" >&2
       break
