@@ -37,7 +37,7 @@ recdl() {
     )"
     exit_status=$?
     # 130 is an expected SIGINT interrupt of fzf (see fzf manpage)
-    [ $exit_status -eq 130 ] && break
+    [ $exit_status -eq 130 ] && return 0
     # No match (see fzf manpage)
     [ $exit_status -eq 1 ] && {
       echo "Warning: impossible to 'cd' to given directory as it is not part of possible choices." >&2;
@@ -53,7 +53,7 @@ recdl() {
     }
     [ $exit_status -eq 0 ] || {
       echo "Error: unexpected error status: '$exit_status'" >&2
-      break
+      return 1
     }
     # change to selected directory
     { [ -d "$dir" ] && cd "$dir"; } || {
