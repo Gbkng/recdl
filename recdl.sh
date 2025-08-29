@@ -33,7 +33,7 @@ recdl() {
         --height=40%
     )"
     exit_status=$?
-    # 130 is an expected SIGINT interrupt of fzf (see 'man fzf')
+    # 130 is an expected SIGINT interrupt of fzf (see fzf manpage)
     [ $exit_status -eq 130 ] && break
     # No match (see fzf manpage)
     [ $exit_status -eq 1 ] && { 
