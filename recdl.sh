@@ -40,6 +40,14 @@ recdl() {
       echo "Warning: impossible to 'cd' to given directory as it is not part of possible choices." >&2; 
       continue
     }
+    [ $exit_status -eq 2 ] && {
+      echo "Error: unexpected error of fzf" >&2
+      cd "$base" || { 
+        echo "Error: failed to recover inital cwd." >&2; 
+        return; 
+      } 
+      return
+    }
     [ $exit_status -eq 0 ] || {
       echo "unexpected error status: '$exit_status'" >&2
       break
