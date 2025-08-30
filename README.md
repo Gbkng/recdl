@@ -2,18 +2,18 @@
 
 A read-eval-cd-loop as a simple, `sh`-compliant, shell function.
 
-The present `recdl.sh` shell script defines the `recdl` function, which repeats the
-following `read-eval-cd` loop:
+`recdl.sh` shell script repeats the following `read-eval-cd` loop:
 
 - Scan directories in the current working directory
 - Let the user interactively choose a directory (see
   [`fzf`](https://github.com/junegunn/fzf) documentation for more information)
-- `cd` to the chosen directory
+- `cd` to the chosen directory (actually, the present implementation only `cd`
+  when the user terminates the loop)
 - Repeat
 
 To interrupt the loop, press `Escape` or `Ctrl-C`.
 
-The `recdl` function is basically just a convenient wrapper around `fzf`.
+The `recdl` function is basically a convenient wrapper around `fzf`.
 
 Note that this repository is really just a way to share the basic idea of
 combining `fd` and `fzf` to create a a `read-eval-cd` loop. For now, it is not meant to
@@ -21,17 +21,12 @@ become a standalone application.
 
 # Installation
 
-Simply clone this repository and `source` (or `.`, on `sh` shell) the `recdl.sh`
-script.
-
-Alternatively, you can copy the `recdl` function of the `recdl.sh` script
-directly inside your shell configuration. It allows customizing the
-function to your needs.
+Simply clone this repository ensure `recdl.sh` is in your `$PATH`.
 
 # Usage
 
 ```sh
-$ recdl
+$ ./recdl.sh
 ```
 
 Hit `Enter` to select a directory (read
@@ -40,9 +35,6 @@ information)
 
 Hit `Ctrl-C` or `Escape` to interrupt the loop, leaving your shell in the last
 selected directory.
-
-The `hrecdl` alias allows to run `recdl` from the `$HOME` directory. Usage is
-the same.
 
 # Requirements
 
