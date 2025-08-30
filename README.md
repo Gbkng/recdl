@@ -52,13 +52,15 @@ available by default on most system while `fd` runs faster
 
 # Rationale
 
-The goal of `recdl` is to change directory with a more pleasant approach than usual `cd`. The latter is repetitive and often does not have fuzzy completion.
+The goal of `recdl` is to change directory with a more pleasant approach than
+usual `cd`. The latter is repetitive and often does not have fuzzy completion.
 
-The `fzf` application allows to fuzzy search any directory or subdirectory inside the current one, directly, with fuzzy match.
+The `fzf` application allows to fuzzy search any directory or subdirectory
+inside the current one, directly, with fuzzy match.
 
-Running `fzf` directly from a large directory (e.g. `$HOME`) is not always satisfactory, as too many
-directories are scanned recursively, leading to high CPU and power
-usage.
+Running `fzf` directly from a large directory (e.g. `$HOME`) is not always
+satisfactory, as too many directories are scanned recursively, leading to high
+CPU and power usage.
 
 One could set filters, such as searching across git repositories only, skipping
 git-ignored files, skipping hidden files, etc. These filters can be very
