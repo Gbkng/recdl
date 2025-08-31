@@ -86,7 +86,7 @@ output. It can then be used in other commands or aliases.
 
 Here are some common use cases:
 
-- Go to selected directory if the command succeed:
+- Go to selected directory if the command succeed (only `cd` if command succeed):
 
   ```sh
   dir="$(recdl.sh)" && cd $dir
@@ -98,23 +98,32 @@ Here are some common use cases:
   dir="$(recdl.sh --path $HOME --no-base --no-current)" && $EDITOR $dir
   ```
 
+- It can be handy to define an alias to such commands. For instance:
+
+  ```sh
+  alias jcd='dir="$(recdl.sh)" && cd "$dir"'
+  ```
+
+  Such alias could typically be added to your shell configuration script.
+
 # Requirements
 
 - [`fzf`](https://github.com/junegunn/fzf)
 - [`fd`](https://github.com/sharkdp/fd) (recommended) or `find`; `find` is
-available by default on most system while `fd` runs faster
+  available by default on most system while `fd` runs faster
 
 # Rationale
 
-The goal of `recdl` is to change directory with a more pleasant approach than
-usual `cd`. The latter is repetitive and often does not have fuzzy completion.
+The original goal of `recdl` was to change directory with a more pleasant
+approach than usual `cd`. **The latter is repetitive and often does not have
+fuzzy completion.**
 
 The `fzf` application allows to fuzzy search any directory or subdirectory
 inside the current one, directly, with fuzzy match.
 
 Running `fzf` directly from a large directory (e.g. `$HOME`) is not always
-satisfactory, as too many directories are scanned recursively, leading to high
-CPU and power usage.
+satisfactory, as **too many directories are scanned recursively, leading to
+high CPU and power usage.**
 
 One could set filters, such as searching across git repositories only, skipping
 git-ignored files, skipping hidden files, etc. These filters can be very
@@ -123,8 +132,8 @@ file to edit). However, they are not always tailored to a generic directory
 search.
 
 The present approach has the following interesting features:
-1) enabling fuzzy search
-2) being very fast (<100ms), and being low on CPU consumption, even when no
+1) enabling **fuzzy search**
+2) being **very fast** (<100ms), and being low on CPU consumption, even when no
    filter is applied on directories to scan
 3) not having to manually repeat the same command (thus the loop)
 
@@ -134,5 +143,6 @@ directories, which is often wanted, but at the detriment of feature 2 above.
 # Alternatives
 
 A very simple alternative is to use
-[`ranger`](https://github.com/ranger/ranger) like so: `source ranger`. The
-`recdl` is much more basic and can be easily customized.
+[`ranger`](https://github.com/ranger/ranger) like so: `source ranger`.
+Comparatively, `recdl` is a much more basic, but is lightweight and easy to
+customized.
