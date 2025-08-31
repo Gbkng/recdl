@@ -55,6 +55,22 @@ which "fzf" >/dev/null 2>&1 ||
     exit 1
   }
 
+fzf_opts="--layout=reverse --smart-case --algo=v2 --style=full --height=40%"
+#shellcheck disable=2086
+fzf --help ${fzf_opts} >/dev/null 2>&1 || {
+    echo "Warning: options '$fzf_opts' are not supported by your version of 'fzf'." >&2;
+    # those options are supported by fzf 0.20.0 (year 2019)
+    fzf_opts="--layout=reverse --algo=v2 --height=40%"
+    echo "Info: try to use fzf options '$fzf_opts' instead." >&2;
+}
+#shellcheck disable=2086
+fzf --help ${fzf_opts} >/dev/null 2>&1 || {
+    echo "Warning: options '$fzf_opts' are not supported by your version of 'fzf'." >&2;
+    fzf_opts=""
+    echo "Info: using no fzf options instead." >&2;
+}
+readonly fzf_opts
+
 # Select fd or find to be used inside recd loop, prefering fd.
 # note: also echo ".." to allow going backward in recdl, as '..' is not
 # present present in output the below fd/find cmd
@@ -96,13 +112,9 @@ fd_cmd() {
   while true; do
     # a buffer is required, as exit value of fzf is irrelevant in case of
     # error or interrupt
+    #shellcheck disable=2086
     buff="$(
-      fd_cmd "$(realpath --relative-to="$start_path" "$current_relative_path")" | fzf \
-        --layout=reverse \
-        --smart-case \
-        --algo=v2 \
-        --style=full \
-        --height=40%
+      fd_cmd "$(realpath --relative-to="$start_path" "$current_relative_path")" | fzf $fzf_opts
     )"
 
     exit_status=$?
