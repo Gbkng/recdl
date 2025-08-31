@@ -59,21 +59,25 @@ which "fzf" >/dev/null 2>&1 ||
 # note: also echo ".." to allow going backward in recdl, as '..' is not
 # present present in output the below fd/find cmd
 if which "fd" >/dev/null 2>&1; then
-  fd_cmd() {
+  fd_alternative() {
     relpath=$1
-    echo "${relpath}/../"
     fd . "${relpath}" -t d --hidden --no-ignore -d 1
   }
 elif which "find" >/dev/null 2>&1; then
-  fd_cmd() {
+  fd_alternative() {
     relpath=$1
-    echo "${relpath}/../"
     find "${relpath}/" -maxdepth 1 -type d
   }
 else
   echo "Neither 'fd' nor 'find' could be found in the current environment. At least one of these dependencies are required. Abort." >&2
   exit 1
 fi
+
+fd_cmd() {
+  relpath=$1
+  echo "${relpath}/../"
+  fd_alternative "${relpath}"
+}
 
 # >>> read-eval-cd loop
 # note: 'cd' globally is often a confusing thing to do. However, as the loop
