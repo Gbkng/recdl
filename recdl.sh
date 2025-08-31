@@ -6,6 +6,7 @@ set -u
 # note: using './' gives prettier output than using $(pwd)
 start_path="./"
 bool_init="false"
+bool_output_base="true"
 
 # >>> Argument parsing
 while [ $# -gt 0 ]; do
@@ -13,6 +14,7 @@ while [ $# -gt 0 ]; do
        -h|--help) echo "Syntaxe: recdl.sh 
                    [--path PATH]  start at PATH instead of current directory
                    [--init]  output a to-be-eval script defining the 'recdl' alias, and exit 
+                   [--no-base]  do not output base in interface
                    [--help]  print this help message, and exit
 
                    DESCRIPTION
@@ -21,6 +23,7 @@ while [ $# -gt 0 ]; do
        "; exit 0;;
        --path) start_path="$2"; shift 2 ;;
        --init) bool_init="true"; shift 1 ;;
+       --no-base) bool_output_base="false"; shift 1 ;;
        *) error "error in argument parsing with arg='$1'"; exit 2 ;;
    esac
 done
@@ -68,6 +71,7 @@ fi
     exit 1
   }
 
+  [ "$bool_output_base" = "true" ] && echo "[base] $(realpath "$start_path")" >&2
 
   newdir_relative="$start_path"
   while true; do
