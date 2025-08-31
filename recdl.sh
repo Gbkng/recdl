@@ -88,7 +88,7 @@ fi
 
   [ "$bool_output_base" = "true" ] && echo "[base] $(realpath "$start_path")" >&2
 
-  newdir_relative="$start_path"
+  newdir_relative="."
   while true; do
     # a buffer is required, as exit value of fzf is irrelevant in case of
     # error or interrupt
