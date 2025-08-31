@@ -36,13 +36,17 @@ if [ "$bool_init" = "true" ]; then
   echo "alias recdl=\"cd \\\$($script_full_path)\""
   exit 0
 fi
+
+# >>> Dependency checking
 which "fzf" >/dev/null 2>&1 ||
   {
-    echo "'fzf' could be found in the current environment. This dependency is required. Abort." >&2;
+    echo "'fzf' could not be found in the current environment. This dependency is required. Abort." >&2;
     exit 1
   }
 
-# note: also echo ".." to allow going backward in recdl
+# Select fd or find to be used inside recd loop, prefering fd.
+# note: also echo ".." to allow going backward in recdl, as '..' is not
+# present present in output the below fd/find cmd
 if which "fd" >/dev/null 2>&1; then
   fd_cmd() {
     relpath=$1
@@ -56,7 +60,7 @@ elif which "find" >/dev/null 2>&1; then
     find "${relpath}/" -maxdepth 1 -type d
   }
 else
-  echo "Neither 'fd' nor 'find' could be found in the current environment. These dependencies are required. Abort." >&2
+  echo "Neither 'fd' nor 'find' could be found in the current environment. At least one of these dependencies are required. Abort." >&2
   exit 1
 fi
 
