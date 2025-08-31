@@ -2,6 +2,32 @@
 
 set -u
 
+# >>> Default values (see arg parsing and --help for more information)
+bool_init="false"
+
+# >>> Argument parsing
+while [ $# -gt 0 ]; do
+   case $1 in
+       -h|--help) echo "Syntaxe: recdl.sh 
+                   [--init]  output a to-be-eval script defining the 'recdl' alias, and exit 
+                   [--help]  print this help message, and exit
+
+                   DESCRIPTION
+
+                   Output a path constructed by interactively appending contiguous subdirectories, using a fuzzy search interface.
+       "; exit 0;;
+       --init) bool_init="true"; shift 1 ;;
+       *) error "error in argument parsing with arg='$1'"; exit 2 ;;
+   esac
+done
+
+readonly bool_init
+
+if [ "$bool_init" = "true" ]; then
+  script_full_path=$(realpath "$0")
+  echo "alias recdl=\"cd \\\$($script_full_path)\""
+  exit 0
+fi
 which "fzf" >/dev/null 2>&1 ||
   {
     echo "'fzf' could be found in the current environment. This dependency is required. Abort." >&2;
