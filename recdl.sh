@@ -14,7 +14,10 @@ while [ $# -gt 0 ]; do
    case $1 in
        -h|--help) echo "Syntaxe: recdl.sh
                    [--path PATH]  start at PATH instead of current directory
-                   [--init]  output a to-be-eval script defining the 'recdl' alias, and exit
+                   [--init]  output a to-be-eval script defining the 'recdl'
+                   alias, and exit. If the --no-base, or --no-current
+                   are used with --init, those options are propagated to the
+                   'recdl' alias.
                    [--no-base]  do not output base directory in interface
                    [--no-current]  do not output current directory in interface
                    [--help]  print this help message, and exit
@@ -38,7 +41,10 @@ readonly bool_output_current
 
 if [ "$bool_init" = "true" ]; then
   script_full_path=$(realpath "$0")
-  echo "alias recdl=\"cd \\\$($script_full_path)\""
+  opts=""
+  [ "$bool_output_base" = "false" ] && opts="$opts --no-base"
+  [ "$bool_output_current" = "false" ] && opts="$opts --no-current"
+  echo "alias recdl='dir=\"\$($script_full_path $opts)\" && cd \"\$dir\"'"
   exit 0
 fi
 
@@ -76,7 +82,7 @@ fi
 # This is done in a subshell to ensure encapsulation.
 (
   cd "$start_path" || {
-    echo "Error: unexpected error while 'cd' into start_path ('$start_path')"
+    echo "Error: unexpected error while 'cd' into start path ('$start_path'). Abort"
     exit 1
   }
 
@@ -101,7 +107,7 @@ fi
     [ $exit_status -eq 130 ] && {
       # output target directory to stdout makes the function composable with cd
       realpath "${start_path}/${newdir_relative}" || {
-        echo "Error: unexpected error while trying to resolve output path ('${start_path}/${newdir_relative}')" >&2
+        echo "Error: unexpected error while trying to resolve output path ('${start_path}/${newdir_relative}'). Abort." >&2
         exit 1
       }
       exit 0
