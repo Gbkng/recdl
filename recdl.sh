@@ -7,6 +7,7 @@ set -u
 start_path="./"
 bool_init="false"
 bool_output_base="true"
+bool_output_current="true"
 
 # >>> Argument parsing
 while [ $# -gt 0 ]; do
@@ -15,6 +16,7 @@ while [ $# -gt 0 ]; do
                    [--path PATH]  start at PATH instead of current directory
                    [--init]  output a to-be-eval script defining the 'recdl' alias, and exit
                    [--no-base]  do not output base in interface
+                   [--no-current]  do not output current directory in interface
                    [--help]  print this help message, and exit
 
                    DESCRIPTION
@@ -24,12 +26,14 @@ while [ $# -gt 0 ]; do
        --path) start_path="$2"; shift 2 ;;
        --init) bool_init="true"; shift 1 ;;
        --no-base) bool_output_base="false"; shift 1 ;;
+       --no-current) bool_output_current="false"; shift 1 ;;
        *) error "error in argument parsing with arg='$1'"; exit 2 ;;
    esac
 done
 
 readonly start_path
 readonly bool_init
+readonly bool_output_current
 
 if [ "$bool_init" = "true" ]; then
   script_full_path=$(realpath "$0")
@@ -125,6 +129,6 @@ fi
 
     # clear line and print currently selected directory
     # see tput manpage
-    printf "%s> %s" "$(tput el)" "$newdir_relative" >&2
+    [ "$bool_output_current" = "true" ] && printf "%s> %s" "$(tput el)" "$newdir_relative" >&2
   done
 )
