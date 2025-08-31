@@ -15,7 +15,7 @@ while [ $# -gt 0 ]; do
        -h|--help) echo "Syntaxe: recdl.sh
                    [--path PATH]  start at PATH instead of current directory
                    [--init]  output a to-be-eval script defining the 'recdl' alias, and exit
-                   [--no-base]  do not output base in interface
+                   [--no-base]  do not output base directory in interface
                    [--no-current]  do not output current directory in interface
                    [--help]  print this help message, and exit
 
@@ -33,6 +33,7 @@ done
 
 readonly start_path
 readonly bool_init
+readonly bool_output_base
 readonly bool_output_current
 
 if [ "$bool_init" = "true" ]; then
