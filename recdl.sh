@@ -133,7 +133,7 @@ fd_cmd() {
 
     current_relative_path=$buff
 
-    [ -d "$current_relative_path" ] || {
+    realpath -e "${start_path}/${current_relative_path}" >/dev/null || {
       echo "Error: unexpectedly, '$current_relative_path' is not a directory. Abort." >&2
       exit 1
     }
