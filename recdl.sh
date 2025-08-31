@@ -11,9 +11,9 @@ bool_output_base="true"
 # >>> Argument parsing
 while [ $# -gt 0 ]; do
    case $1 in
-       -h|--help) echo "Syntaxe: recdl.sh 
+       -h|--help) echo "Syntaxe: recdl.sh
                    [--path PATH]  start at PATH instead of current directory
-                   [--init]  output a to-be-eval script defining the 'recdl' alias, and exit 
+                   [--init]  output a to-be-eval script defining the 'recdl' alias, and exit
                    [--no-base]  do not output base in interface
                    [--help]  print this help message, and exit
 
@@ -68,9 +68,9 @@ fi
 # note: 'cd' globally is often a confusing thing to do. However, as the loop
 # relies on './' (for ergonomy) and '../' (for going-backward feature), it is
 # considered the less confusing alternative.
-# This is done in a subshell to ensure encapsulation. 
+# This is done in a subshell to ensure encapsulation.
 (
-  cd "$start_path" || { 
+  cd "$start_path" || {
     echo "Error: unexpected error while 'cd' into start_path ('$start_path')"
     exit 1
   }
