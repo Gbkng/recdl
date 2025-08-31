@@ -51,7 +51,7 @@ fi
 # >>> Dependency checking
 which "fzf" >/dev/null 2>&1 ||
   {
-    echo "'fzf' could not be found in the current environment. This dependency is required. Abort." >&2;
+    echo "Error: 'fzf' could not be found in the current environment. This dependency is required. Abort." >&2;
     exit 1
   }
 
@@ -69,7 +69,7 @@ elif which "find" >/dev/null 2>&1; then
     find "${relpath}/" -maxdepth 1 -type d
   }
 else
-  echo "Neither 'fd' nor 'find' could be found in the current environment. At least one of these dependencies are required. Abort." >&2
+  echo "Error: neither 'fd' nor 'find' could be found in the current environment. At least one of these dependencies are required. Abort." >&2
   exit 1
 fi
 
