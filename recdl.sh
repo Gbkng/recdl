@@ -88,12 +88,12 @@ fi
 
   [ "$bool_output_base" = "true" ] && echo "[base] $(realpath "$start_path")" >&2
 
-  newdir_relative="."
+  current_relative_path="."
   while true; do
     # a buffer is required, as exit value of fzf is irrelevant in case of
     # error or interrupt
     buff="$(
-      fd_cmd "$(realpath --relative-to="$start_path" "$newdir_relative")" | fzf \
+      fd_cmd "$(realpath --relative-to="$start_path" "$current_relative_path")" | fzf \
         --layout=reverse \
         --smart-case \
         --algo=v2 \
@@ -106,8 +106,8 @@ fi
     # 130 is an expected SIGINT interrupt of fzf (see fzf manpage)
     [ $exit_status -eq 130 ] && {
       # output target directory to stdout makes the function composable with cd
-      realpath "${start_path}/${newdir_relative}" || {
-        echo "Error: unexpected error while trying to resolve output path ('${start_path}/${newdir_relative}'). Abort." >&2
+      realpath "${start_path}/${current_relative_path}" || {
+        echo "Error: unexpected error while trying to resolve output path ('${start_path}/${current_relative_path}'). Abort." >&2
         exit 1
       }
       exit 0
@@ -127,15 +127,15 @@ fi
       exit 1
     }
 
-    newdir_relative=$buff
+    current_relative_path=$buff
 
-    [ -d "$newdir_relative" ] || {
-      echo "Error: unexpectedly, '$newdir_relative' is not a directory. Abort." >&2
+    [ -d "$current_relative_path" ] || {
+      echo "Error: unexpectedly, '$current_relative_path' is not a directory. Abort." >&2
       exit 1
     }
 
     # clear line and print currently selected directory
     # see tput manpage
-    [ "$bool_output_current" = "true" ] && printf "%s> %s" "$(tput el)" "$newdir_relative" >&2
+    [ "$bool_output_current" = "true" ] && printf "%s> %s" "$(tput el)" "$current_relative_path" >&2
   done
 )
