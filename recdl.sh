@@ -110,7 +110,7 @@ fd_cmd() {
     # 130 is an expected SIGINT interrupt of fzf (see fzf manpage)
     [ $exit_status -eq 130 ] && {
       # output target directory to stdout makes the function composable with cd
-      realpath "${start_path}/${current_relative_path}" || {
+      realpath -e "${start_path}/${current_relative_path}" || {
         echo "Error: unexpected error while trying to resolve output path ('${start_path}/${current_relative_path}'). Abort." >&2
         exit 1
       }
